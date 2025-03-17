@@ -2,12 +2,20 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+from typing import Optional
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class PlotterClass:
-    def __init__(self, path, axis, base_folder_to_save):
-        self.path = path
+    def __init__(self, 
+                 file_path: str, 
+                 axis: Optional[str], 
+                 base_folder_to_save: Optional[str]):
+        self.file_path = file_path
         self.axis = axis
-        self.base_folder_to_save = base_folder_to_save
+        self.base_folder_to_save = base_folder_to_save or os.getenv("base_folder")
+        
         if self.axis == "x":
             self.independent_var = "y"
         elif self.axis == "y":
@@ -23,8 +31,8 @@ class PlotterClass:
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
 
     def fwhm(self):
-        self._check_file_exists(self.path)
-        df = pd.read_csv(self.path)
+        self._check_file_exists(self.file_path)
+        df = pd.read_csv(self.file_path)
 
         axis = self.axis.lower()
         independent_var = self.independent_var.lower()
