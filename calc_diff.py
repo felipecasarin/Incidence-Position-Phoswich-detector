@@ -20,7 +20,7 @@ def calc_diff(xlsx_file_path, x_value, y_value):
     df['X_diff'] = x_value - df['X']
     df['Y_diff'] = y_value - df['Y']
     
-    return df[['X', 'Y', 'X_exp', 'Y_exp', 'X_diff', 'Y_diff']]  # Return only desired columns
+    return df[['L1','L2','L3','L4','C1','C2','C3','C4','cL1','cL2','cL3','cL4','cC1','cC2','cC3','cC4','X', 'Y', 'X_exp', 'Y_exp', 'X_diff', 'Y_diff']]  # Return only desired columns
 
 # List to store DataFrame results
 results = []
@@ -28,7 +28,7 @@ results = []
 # Process each generated xlsx file
 for x_value in x_span:
     for y_value in y_span:
-        xlsx_file_path = f'outfiles_pos_calc_0903_pixdim3/{x_value}_{y_value}_pos.xlsx'
+        xlsx_file_path = f'outfiles_no_filter_2/{x_value}_{y_value}_pos.xlsx'
         
         # Check if the file exists
         if os.path.exists(xlsx_file_path):
@@ -41,5 +41,5 @@ for x_value in x_span:
 results_df = pd.concat(results, ignore_index=True)
 
 # Save the results to a new CSV file
-results_df.to_csv('diff_values_0903_pixdim3.csv', index=False)
+results_df.to_csv('outfiles_no_filter_2/diff_allcolumns.csv', index=False)
 print("Values differences have been calculated and saved to 'diff_values.csv'")

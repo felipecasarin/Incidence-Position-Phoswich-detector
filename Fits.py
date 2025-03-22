@@ -2,15 +2,17 @@
 from __future__ import division 
 from math import *
 import numpy as np
-import matplotlib.pyplot as plt
-from numpy import cross, eye, dot
 import ImageModelClass as IMC
 import ExpPat as EX
 import ExpReCal as ERC
 import scipy as sp
-from scipy.optimize import least_squares
-import sys
 import time
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+base_folder = os.getenv("base_folder")
 
 
 #list of experimental data point positions 
@@ -83,7 +85,9 @@ def fbc(X,Y_dat,Y_sig):
 def newfitbc(eps0=0.8,b=np.ones((2,4)),c=np.zeros((2,4)),blim=10.,clim=1000.): #blim minimum, xylim min/max both x/y
 
 	# Set saving directory
-	save_directory = "./outfiles_pos_calc_0903_pixdim3/parameters/"
+	base_folder = os.getenv("base_folder")
+	save_directory = os.path.join(base_folder,"parameters")
+	os.makedirs(os.path.dirname(save_directory), exist_ok=True)
 	#initial values
 	starting_time = time.time()
 	print("Initializing Parameters Fitting")
@@ -111,9 +115,10 @@ def newfitbc(eps0=0.8,b=np.ones((2,4)),c=np.zeros((2,4)),blim=10.,clim=1000.): #
 	result = sp.optimize.least_squares(fbc,X,bounds=(bdi,bds),args = ([ExDataTab,ExN*RelErrorDat]),loss='soft_l1',tr_solver='lsmr',method='trf', verbose=2)
 
 	print(result)
-	np.savetxt(f"{save_directory}par_eps_09_03_pixdim3.txt",np.array([result.x[0]]))
-	np.savetxt(f"{save_directory}par_b_09_03_pixdim3.txt", result.x[1:9])
-	np.savetxt(f"{save_directory}par_c_09_03_pixdim3.txt", result.x[9:17])
+	np.savetxt(f"{save_directory}par_eps.txt",np.array([result.x[0]]))
+	np.savetxt(f"{save_directory}par_b.txt", result.x[1:9])
+	np.savetxt(f"{save_directory}par_c.txt", result.x[9:17])
 	ending_time = time.time()
 	print("Elapsed time:",ending_time - starting_time)
+	print(f"Saved parameters at: {save_directory}")
 	return result.x

@@ -61,8 +61,8 @@ class PlotterClass:
         plt.close()
 
     def diff(self, is_heatmap_plot):
-        self._check_file_exists(self.path)
-        df = pd.read_csv(self.path, usecols=['X_exp', 'Y_exp', 'X_diff', 'Y_diff'])
+        self._check_file_exists(self.file_path)
+        df = pd.read_csv(self.file_path, usecols=['X_exp', 'Y_exp', 'X_diff', 'Y_diff'])
         df = df[df[f"{self.independent_var.upper()}_exp"] == 0]
 
         axis = self.axis.lower()
@@ -123,10 +123,10 @@ class PlotterClass:
         plt.close()
 
     def yx_pos_distribution(self, x_value, y_value):
-        self._check_file_exists(self.path)
-        df = pd.read_csv(self.path, usecols=['X', 'Y', 'X_exp', 'Y_exp'])
+        self._check_file_exists(self.file_path)
+        df = pd.read_csv(self.file_path, usecols=['X', 'Y', 'X_exp', 'Y_exp'])
 
-        axis = self.axis.lower()
+        axis = self.axis.upper()
         filtered_data = df[(df['X_exp'] == x_value) & (df['Y_exp'] == y_value)]
 
         plt.figure(figsize=(8, 6))
@@ -135,7 +135,10 @@ class PlotterClass:
         plt.ylabel('Number of events')
         plt.hist(filtered_data[axis], bins=50)
         plt.grid(True)
-        plt.show()
+        save_path = os.path.join(self.base_folder_to_save, "images/distribution", f"dist_{axis}_{x_value}_{y_value}.png")
+        self._ensure_directory_exists(save_path)
+        plt.savefig(save_path, dpi=300)
+        plt.close()
 
     def YX_heatmap(self, is_single_plot, x_value=0, y_value=0):
         file_name = f"{x_value}_{y_value}_pos.xlsx"
