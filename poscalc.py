@@ -126,43 +126,29 @@ def calib(l1,l2,l3,l4,c1,c2,c3,c4):
     
    
     #Calibrated lines
-    if l1 > 0:
-        calL1 = (l1)*b[3]+c[3]
-    else:
-        calL1 = l1
-    if l2 > 0:
-        calL2 = (l2)*b[2]+c[2]
-    else:
-        calL2 = l2
-    if l3 > 0:
-        calL3 = (l3)*b[1]+c[1]
-    else:
-        calL3 = l3
-    if l4 > 0:
-        calL4 = (l4)*b[0]+c[0]
-    else:
-        calL4 = l4
+
+    calL1 = (l1)*b[3]+c[3]
+
+    calL2 = (l2)*b[2]+c[2]
+
+    calL3 = (l3)*b[1]+c[1]
+
+    calL4 = (l4)*b[0]+c[0]
+ 
     sumL = calL1 + calL2 + calL3 + calL4
     
     
     #Calibrated columns
 
-    if c1 > 0:
-        calC1 = (c1)*b[4]+c[4]
-    else:
-        calC1 = c1
-    if l2 > 0:
-        calC2 = (c2)*b[5]+c[5]
-    else:
-        calC2 = c2
-    if l3 > 0:
-        calC3 = (c3)*b[6]+c[6]
-    else:
-        calC3 = c3
-    if l4 > 0:
-        calC4 = (c4)*b[7]+c[7]
-    else:
-        calC4 = c4
+
+    calC1 = (c1)*b[4]+c[4]
+
+    calC2 = (c2)*b[5]+c[5]
+
+    calC3 = (c3)*b[6]+c[6]
+
+    calC4 = (c4)*b[7]+c[7]
+
     sumC = calC1 + calC2 + calC3 + calC4
     
     
@@ -237,10 +223,11 @@ def pos(x,y):
 
         #if L1>150 and L2>300 and L3>300 and L4>150 and C1>150 and C2> 100 and C3>100 and C4>150:
         # if L1>0 and L2>0 and L3>0 and L4>0 and C1>0 and C2>0 and C3>0 and C4>0:
-        if L1+L2+L3+L4>0 and C1+C2+C3+C4>0:
+        #if L1+L2+L3+L4>0 and C1+C2+C3+C4>0:
+        if True:
             calb = calib(L1,L2,L3,L4,C1,C2,C3,C4)
-            # if calb[0] > 0.15 and calb[1] > 0.15 and calb[2] > 0.15 and calb[3] > 0.15 and calb[4] > 0.15 and calb[5] > 0.15 and calb[6] > 0.15 and calb[7] > 0.15:
-            if True:
+            # if calb[0] < 0.37 and calb[1] < 0.37 and calb[2] < 0.37 and calb[3] < 0.37 and calb[4] < 0.37 and calb[5] < 0.37 and calb[6] < 0.37 and calb[7] < 0.37:
+            if calb[0] < 0.40 and calb[1] < 0.40 and calb[2] < 0.40 and calb[3] < 0.40 and calb[4] < 0.40 and calb[5] < 0.40 and calb[6] < 0.40 and calb[7] < 0.40:
                 if entryNum % 100 == 0:
                     print('-------------------------------')
                     print(f"entrynum:{entryNum} L1:{L1}// L2:{L2}// L3:{L3}// L4:{L4}// C1:{C1}// C2:{C2}// C3:{C3}// C4:{C4}")  
@@ -252,7 +239,7 @@ def pos(x,y):
                 new_row = {'L1':L1,'L2':L2,'L3':L3,'L4':L4,'C1':C1,'C2':C2,'C3':C3,'C4':C4,'cL1':newExN[0][3],'cL2':newExN[0][2],'cL3':newExN[0][1],'cL4':newExN[0][0],'cC1':newExN[1][0],'cC2':newExN[1][1],'cC3':newExN[1][2],'cC4':newExN[1][3],'X':result.x[1],'Y':result.x[0]}
                 response = response._append(new_row, ignore_index=True)
     print("It is done.")
-    response.to_excel('outfiles_no_filter_2/' + str(x) + '_' + str(y) + '_pos' + '.xlsx', index=False)
+    response.to_excel('outfiles_040_filter/' + str(x) + '_' + str(y) + '_pos' + '.xlsx', index=False)
 
 
 x_span=np.array([-6,-4,-2,0,2,4,6])

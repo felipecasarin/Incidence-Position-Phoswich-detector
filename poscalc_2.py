@@ -240,7 +240,7 @@ def pos(x,y):
                 new_row = {'L1':L1,'L2':L2,'L3':L3,'L4':L4,'C1':C1,'C2':C2,'C3':C3,'C4':C4,'cL1':newExN[0][3],'cL2':newExN[0][2],'cL3':newExN[0][1],'cL4':newExN[0][0],'cC1':newExN[1][0],'cC2':newExN[1][1],'cC3':newExN[1][2],'cC4':newExN[1][3],'X':result.x[1],'Y':result.x[0]}
                 response = response._append(new_row, ignore_index=True)
     print("It is done.")
-    response.to_excel('outfiles_no_filter_2/' + str(x) + '_' + str(y) + '_pos' + '.xlsx', index=False)
+    response.to_excel('outfiles_border_filter/' + str(x) + '_' + str(y) + '_pos' + '.xlsx', index=False)
 
 
 x_span=np.array([-6,-4,-2,0,2,4,6])

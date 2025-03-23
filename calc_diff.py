@@ -41,5 +41,5 @@ for x_value in x_span:
 results_df = pd.concat(results, ignore_index=True)
 
 # Save the results to a new CSV file
-results_df.to_csv('outfiles_no_filter_2/diff_allcolumns.csv', index=False)
+results_df.to_csv('outfiles_border_filter/diff_allcolumns.csv', index=False)
 print("Values differences have been calculated and saved to 'diff_values.csv'")
